@@ -45,30 +45,28 @@
 
 const viewportSec = ()=>{
     for(const section of sections){
-        if(section.getBoundingClientRect().top > 0 &&
-        section.getBoundingClientRect().top < 450){
+        if(section.getBoundingClientRect().top > -330 &&
+        section.getBoundingClientRect().top < 500){
             return section;
         } 
     }    
 }
 const liveSection = (viewedSection) =>{
-    const currentActSec = document.querySelector(".act_class");
-    if(currentActSec !== null){
-        const currLink = liveAnchor(currentActSec);
-        currLink.classList.add("act_class");
+        const currentActSec = document.querySelector("section.act_class");
+        if(currentActSec !== null){
+        const currentLink = liveAnchor(currentActSec);
+        currentLink.classList.add("act_class");
         currentActSec.classList.remove("act_class");
-        currLink.classList.remove("act_class");
-    }
-    if(viewedSection !== undefined){
+        currentLink.classList.remove("act_class");
+        }   
         liveAnchor(viewedSection).classList.add("act_class");
         viewedSection.classList.add("act_class");
-    }
+    
 }
 
-const liveAnchor = (pickedSec)=> {
-    const sectionID = pickedSec.getAttribute("id");
+const liveAnchor = (wantedSection)=> {
+    const sectionID = wantedSection.getAttribute("id");
     const anchor = document.querySelector(`a[href*=${sectionID}]`);
-
     return anchor ;
 }
 // Scroll to anchor ID using scrollTO event
@@ -99,16 +97,17 @@ const liveAnchor = (pickedSec)=> {
 
 ul.addEventListener("click",function(event){
     event.preventDefault;
-    event.target.scrollIntoView({
+    const selectedID = event.target.getAttribute("href").substring(1);
+    const selectedElement = document.getElementById(selectedID);
+    liveSection(selectedElement);
+    selectedElement.scrollIntoView({
         behavior : "smooth",
         block : "center"
-    })
-    console.log(event.target.getAttribute("href").substring(1))
+    });
 })
 // Set sections as active
 document.addEventListener("scroll" , function(){
-    const activeSection = viewportSec();
-    liveSection(activeSection);
-
+    const onGoingSec = viewportSec();
+    liveSection(onGoingSec);
 });
 
