@@ -22,6 +22,7 @@
  * Define Global Variables
  * 
 */
+    const activeclass = "your-active-class";
     const sections = document.querySelectorAll("section");
     const scLenght = sections.length ;
     const navbar = document.querySelector(".navbar_menu");
@@ -42,9 +43,23 @@
     
 // Add class 'active' to section when near top of viewport
 
+const viewportSec = ()=>{
+    const currAct = document.querySelector("section.your-active-class");
+    for(const section of sections){
+        if(section.getBoundingClientRect().top > 0 &&
+        section.getBoundingClientRect().top < 450){
+            currAct.classList.remove(activeclass);
+            section.classList.add(activeclass);
+            return section;
+            }
+        }
+    
+}
+
+
 // Scroll to anchor ID using scrollTO event
-
-
+    
+ 
 /**
  * End Main Functions
  * Begin Events
@@ -57,18 +72,26 @@
         for (const section of sections){
             const li = document.createElement("li");
             const anchor = document.createElement("a");
-            anchor.href = `#${section.id}` ;
+            anchor.setAttribute("href",`#${section.id}`);
             anchor.classList.add("menu__link");
             anchor.textContent = section.dataset.nav;
             li.appendChild(anchor);
             fragment.appendChild(li);
-            console.log(anchor);
         }
         ul.appendChild(fragment);
 
     });
 // Scroll to section on link click
-    
-// Set sections as active
 
+ul.addEventListener("click",function(event){
+    event.preventDefault;
+    const sec = document.querySelector() ;
+    event.target.scrollIntoView({
+        behavior : "smooth",
+        block : "center"
+    })
+    console.log(event.target)
+})
+// Set sections as active
+document.addEventListener("scroll" , viewportSec);
 
