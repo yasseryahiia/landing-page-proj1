@@ -22,7 +22,6 @@
  * Define Global Variables
  * 
 */
-    const activeclass = "your-active-class";
     const sections = document.querySelectorAll("section");
     const scLenght = sections.length ;
     const navbar = document.querySelector(".navbar_menu");
@@ -43,20 +42,35 @@
     
 // Add class 'active' to section when near top of viewport
 
+
 const viewportSec = ()=>{
-    const currAct = document.querySelector("section.your-active-class");
     for(const section of sections){
         if(section.getBoundingClientRect().top > 0 &&
         section.getBoundingClientRect().top < 450){
-            currAct.classList.remove(activeclass);
-            section.classList.add(activeclass);
             return section;
-            }
-        }
-    
+        } 
+    }    
+}
+const liveSection = (viewedSection) =>{
+    const currentActSec = document.querySelector(".act_class");
+    if(currentActSec !== null){
+        const currLink = liveAnchor(currentActSec);
+        currLink.classList.add("act_class");
+        currentActSec.classList.remove("act_class");
+        currLink.classList.remove("act_class");
+    }
+    if(viewedSection !== undefined){
+        liveAnchor(viewedSection).classList.add("act_class");
+        viewedSection.classList.add("act_class");
+    }
 }
 
+const liveAnchor = (pickedSec)=> {
+    const sectionID = pickedSec.getAttribute("id");
+    const anchor = document.querySelector(`a[href*=${sectionID}]`);
 
+    return anchor ;
+}
 // Scroll to anchor ID using scrollTO event
     
  
@@ -85,13 +99,16 @@ const viewportSec = ()=>{
 
 ul.addEventListener("click",function(event){
     event.preventDefault;
-    const sec = document.querySelector() ;
     event.target.scrollIntoView({
         behavior : "smooth",
         block : "center"
     })
-    console.log(event.target)
+    console.log(event.target.getAttribute("href").substring(1))
 })
 // Set sections as active
-document.addEventListener("scroll" , viewportSec);
+document.addEventListener("scroll" , function(){
+    const activeSection = viewportSec();
+    liveSection(activeSection);
+
+});
 
