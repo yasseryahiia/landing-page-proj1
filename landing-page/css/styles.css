@@ -70,8 +70,10 @@ section {
     text-align: right;
     display: none;
 }
-.navbar__menu li {
+
+.navbar__menu.selected ul{
     text-align: center;
+    display: block;
 }
 
 .navbar__menu .menu__link {
@@ -137,10 +139,10 @@ section {
 
 
 @media only screen and (min-width: 35em){
-    .navbar__menu{
-        display: flex;
+    .navbar__menu ul{
+        display: block;
     }
-    .navbar__menu.selected ul{
+    .navbar__menu li{
         display: inline-block;
     }
     .gate{

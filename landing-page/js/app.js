@@ -24,7 +24,7 @@
 */
     const sections = document.querySelectorAll("section");
     const scLenght = sections.length ;
-    const navbar = document.querySelector(".navbar_menu");
+    const navbar = document.querySelector(".navbar__menu");
     const ul = document.querySelector("#navbar__list");   
 /**
  * End Global Variables
@@ -93,17 +93,32 @@ const liveAnchor = (wantedSection)=> {
         ul.appendChild(fragment);
 
     });
+
+    navbar.addEventListener("click",function(event){
+        const bar = document.querySelector("nav");
+        if(event.target.nodeName.toLowerCase() === 'i'){
+            bar.classList.toggle("selected");
+        }
+    })
 // Scroll to section on link click
 
 ul.addEventListener("click",function(event){
+    if(event.target.nodeName === 'A'){
     event.preventDefault;
     const selectedID = event.target.getAttribute("href").substring(1);
     const selectedElement = document.getElementById(selectedID);
     liveSection(selectedElement);
-    selectedElement.scrollIntoView({
+    /*let value = selectedElement.offsetTop;
+    window.scrollTo({
+        top : value,
+        behavior : 'smooth'
+    }) */
+     selectedElement.scrollIntoView({
         behavior : "smooth",
         block : "center"
     });
+    
+}
 })
 // Set sections as active
 document.addEventListener("scroll" , function(){
