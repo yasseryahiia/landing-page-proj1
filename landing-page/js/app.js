@@ -39,7 +39,19 @@
 */
 
 // build the nav
-    
+    const buildNavBar =  () => {
+        const fragment = document.createDocumentFragment();
+        for (const section of sections){
+            const li = document.createElement("li");
+            const anchor = document.createElement("a");
+            anchor.setAttribute("href",`#${section.id}`);
+            anchor.classList.add("menu__link");
+            anchor.textContent = section.dataset.nav;
+            li.appendChild(anchor);
+            fragment.appendChild(li);
+        }
+        return fragment ;
+    };
 // Add class 'active' to section when near top of viewport
 
 
@@ -58,11 +70,11 @@ const liveSection = (viewedSection) =>{
         currentLink.classList.add("act_class");
         currentActSec.classList.remove("act_class");
         currentLink.classList.remove("act_class");
-        }   
+        };   
         liveAnchor(viewedSection).classList.add("act_class");
         viewedSection.classList.add("act_class");
     
-}
+};
 
 const liveAnchor = (wantedSection)=> {
     const sectionID = wantedSection.getAttribute("id");
@@ -79,47 +91,36 @@ const liveAnchor = (wantedSection)=> {
 */
 
 // Build menu 
-    document.addEventListener("DOMContentLoaded" , function(){
-        const fragment = document.createDocumentFragment();
-        for (const section of sections){
-            const li = document.createElement("li");
-            const anchor = document.createElement("a");
-            anchor.setAttribute("href",`#${section.id}`);
-            anchor.classList.add("menu__link");
-            anchor.textContent = section.dataset.nav;
-            li.appendChild(anchor);
-            fragment.appendChild(li);
-        }
-        ul.appendChild(fragment);
+document.addEventListener("DOMContentLoaded" , function(){
+        const navBar = buildNavBar();
+        ul.appendChild(navBar);
 
-    });
-
-    navbar.addEventListener("click",function(event){
+});
+// opening and closing the navbar at mobiles devices
+navbar.addEventListener("click",function(event){
         const bar = document.querySelector("nav");
         if(event.target.nodeName.toLowerCase() === 'i'){
             bar.classList.toggle("selected");
         }
-    })
+});
 // Scroll to section on link click
 
 ul.addEventListener("click",function(event){
     if(event.target.nodeName === 'A'){
-    event.preventDefault;
+    
+    event.preventDefault();
+
     const selectedID = event.target.getAttribute("href").substring(1);
     const selectedElement = document.getElementById(selectedID);
+    
     liveSection(selectedElement);
-    /*let value = selectedElement.offsetTop;
-    window.scrollTo({
-        top : value,
-        behavior : 'smooth'
-    }) */
-     selectedElement.scrollIntoView({
+
+    selectedElement.scrollIntoView({
         behavior : "smooth",
         block : "center"
-    });
-    
+    }); 
 }
-})
+});
 // Set sections as active
 document.addEventListener("scroll" , function(){
     const onGoingSec = viewportSec();
