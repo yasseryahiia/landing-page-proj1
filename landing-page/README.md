@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+
 * [The_project](#the-project)
 
 ## The project
